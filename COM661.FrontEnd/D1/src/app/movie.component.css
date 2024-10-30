@@ -1,0 +1,64 @@
+.card {
+  display: flex;
+  margin-bottom: 20px;
+  max-width: 1000px; /* Adjusted max-width for the card */
+  margin: auto;
+}
+
+.card-body {
+  flex: 1;
+  padding: 15px;
+  text-align: center;
+}
+
+.card-footer {
+  text-align: center;
+}
+
+.edit-button {
+  background-color: green;
+  color: white;
+  margin-right: 5px;
+  padding: 8px 10px;
+}
+
+.delete-button {
+  background-color: red;
+  color: white;
+  padding: 8px 10px;
+}
+
+.movie-container {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 2000px; /* Adjusted max-width for the card */
+  gap: 20px;
+  justify-content: center;
+}
+
+.movie-card {
+  display: flex;
+  max-width: 2000px; /* Adjusted max-width for the card */
+  margin: auto;
+}
+
+.movie-poster {
+  width: 300px;
+  height: 400px;
+  margin-top: 30px;
+  border: 5px solid #000000;
+}
+
+.movie-details {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 2000px; /* Adjusted max-width for the card */
+  flex: 1;
+}
+
+h2 {
+  text-align: center;
+}

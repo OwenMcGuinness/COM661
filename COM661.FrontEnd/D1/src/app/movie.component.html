@@ -1,0 +1,196 @@
+<div class="container" style="margin-top:70px;">
+  <div class="row">
+    <div class="col-sm-" *ngFor="let movie of movie_list | async" style="margin-bottom: 20px;">
+      <div class="card text-white bg-dark h-100" [routerLink]="['/movies', movie._id]">
+        <div class="card-body">
+          <div class="card-header">{{ movie.title }} ({{ movie.year }})</div>
+          <img [src]="movie.posterUrl" alt="URL UNAVAILABLE" class="movie-poster" style="margin-bottom:10px; ">
+          <p class="small"><strong>Runtime:</strong> {{ movie.runtime }} mins</p>
+          <p class="small"><strong>Genres:</strong> {{ movie.genres }}</p>
+          <p class="small"><strong>Actors:</strong> {{ movie.actors }}</p>
+          <p class="small"><strong>Directed by :</strong> {{ movie.director }}</p>
+          <p class="small"><strong>Year:</strong> {{ movie.genres }}</p>
+          <p class="small"><strong>Plot:</strong> {{ movie.plot }}</p>
+        </div>
+        <div class="card-footer">
+          {{ movie.stars }}★ from {{ movie.reviews_count }} total reviews <br>
+          <button class="btn btn-success" style="margin-right: 5px" *ngIf="authService.isAuthenticated$ | async" (click)="showReviewForm()">
+            Review
+          </button>          
+          <button class="btn btn-warning" style="margin-right: 5px" *ngIf="authService.isAuthenticated$ | async" (click)="showEditMovieForm()">
+            Edit
+          </button>
+          <button class="btn btn-danger" *ngIf="authService.isAuthenticated$ | async" (click)="deleteMovie()">
+            Delete
+        </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="container mt-4">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 mb-3" *ngFor="let review of reviews | async">
+        <div class="card bg-light mb-3" style="width: 30rem;">
+          <div class="card-header">
+            Review by {{ review.username }} on {{ review.date }}
+          </div>
+          <div class="card-body">
+            {{ review.text }}
+          </div>
+          <div class="card-footer align-items-center">
+            {{ review.stars }} ★
+            <button class="btn btn-warning" style="margin-right: 5px" *ngIf="authService.isAuthenticated$ | async" (click)="showEditForm($event, review)">
+              Edit
+            </button>
+            <button class="btn btn-danger" *ngIf="authService.isAuthenticated$ | async" (click)="deleteReview(review._id)">
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <div id="reviewModal" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Review Movie</h5>
+          <button type="button" class="close" data-dismiss="modal" (click)="hideReviewForm()">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="reviewForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label for="name">Name: </label>
+              <input type="text" id="username" name="username" class="form-control" formControlName="username" [ngClass]="{'error': isInvalid('username')}" >
+            </div><br>
+            <div class="form-group">
+              <label for="review">Review: </label>
+              <textarea id="review" rows="3" name="review" class="form-control" formControlName="review" [ngClass]="{'error': isInvalid('username')}" ></textarea>
+            </div><br>
+            <div class="form-group">
+              <label for="stars">Rating (1-5★): </label>
+              <select id="stars" name="stars" class="form-control" formControlName="stars">
+                <option value="1">★</option>
+                <option value="2">★★</option>
+                <option value="3">★★★</option>
+                <option value="4">★★★★</option>
+                <option value="5">★★★★★</option>
+              </select>
+            </div><br>
+            <span *ngIf="isIncomplete()">
+              Complete all fields to submit
+            </span><br><br>
+            <button *ngIf="!isIncomplete()" type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="hideReviewForm()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="editModal" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Review</h5>
+          <button type="button" class="close" (click)="hideEditForm()">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="editForm" (ngSubmit)="onEdit()">
+            <div class="form-group">
+              <label for="name">Name: </label>
+              <input type="text" id="username" name="username" class="form-control" formControlName="username" [ngClass]="{'error': isInvalid('username')}" >
+            </div><br>
+            <div class="form-group">
+              <label for="review">Review: </label>
+              <textarea id="review" rows="3" name="review" class="form-control" formControlName="review" [ngClass]="{'error': isInvalid('username')}" ></textarea>
+            </div><br>
+            <div class="form-group">
+              <label for="stars">Rating (1-5★): </label>
+              <select id="stars" name="stars" class="form-control" formControlName="stars">
+                <option value="1">★</option>
+                <option value="2">★★</option>
+                <option value="3">★★★</option>
+                <option value="4">★★★★</option>
+                <option value="5">★★★★★</option>
+              </select>
+            </div><br>
+            <span *ngIf="isIncomplete()">
+              Complete all fields to submit
+            </span><br><br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="hideEditForm()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<div id="editMovieModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Movie</h5>
+        <button type="button" class="close" (click)="hideEditMovieForm()">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="editMovie()" #editMovieForm="ngForm" class="form">
+
+          <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" class="form-control" required [(ngModel)]="newMovie.title">
+          </div>
+
+          <div class="form-group">
+            <label for="genres">Genres:</label>
+            <input type="text" id="genres" name="genres" class="form-control" required [(ngModel)]="newMovie.genres">
+          </div>
+
+          <div class="form-group">
+            <label for="runtime">Runtime:</label>
+            <input type="text" id="runtime" name="runtime" class="form-control" required [(ngModel)]="newMovie.runtime">
+          </div>
+
+          <div class="form-group">
+            <label for="year">Year:</label>
+            <input type="text" id="year" name="year" class="form-control" required [(ngModel)]="newMovie.year">
+          </div>
+
+          <div class="form-group">
+            <label for="actors">Actors:</label>
+            <input type="text" id="actors" name="actors" class="form-control" required [(ngModel)]="newMovie.actors">
+          </div>
+
+          <div class="form-group">
+            <label for="director">Director:</label>
+            <input type="text" id="director" name="director" class="form-control" required [(ngModel)]="newMovie.director">
+          </div>
+
+          <div class="form-group">
+            <label for="plot">Plot:</label>
+            <input type="text" id="plot" name="plot" class="form-control" required [(ngModel)]="newMovie.plot">
+          </div>
+
+          <div class="form-group">
+            <label for="posterUrl">Poster URL:</label>
+            <input type="text" id="posterUrl" name="posterUrl" class="form-control" required [(ngModel)]="newMovie.posterUrl">
+          </div><br>
+
+          <button class="btn btn-success" type="submit" [disabled]="!editMovieForm.valid">Save Changes</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="hideEditMovieForm()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+.navbar {
+  background-color: #343a40; 
+}
+
+.navbar-dark .navbar-brand,
+.navbar-dark .navbar-nav .nav-link {
+  font-weight: bold; 
+}
+
+.navbar-dark .navbar-toggler-icon {
+  background-color: limegreen; 
+}
+
+.navbar-dark .navbar-toggler {
+  border-color: limegreen; 
+}
+
+
+.navbar-dark .navbar-nav .nav-link:hover {
+  color: #fff; 
+}
+
+
+.btn-success {
+  background-color: limegreen;
+  border-color: limegreen;
+}
+
+.btn-success:hover {
+  background-color: #32CD32; 
+  border-color: #32CD32;
+}

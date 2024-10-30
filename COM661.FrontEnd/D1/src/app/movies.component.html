@@ -1,0 +1,103 @@
+<div class="container mt-4">
+  <div class="row mt-4">
+    <div class="col-sm-8">
+      <div class="input-group">
+        <input type="text" [(ngModel)]="searchTerm" placeholder="Search by Title, Genre, Actors, Director" class="form-control" style="margin-left: 10px;">       
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="button" style="margin-left: 10px;" (click)="searchMovies()">Search</button>
+          <button *ngIf="authService.isAuthenticated$ | async" class="btn btn-success btn-fixed-width" style="margin-left: 10px;" (click)="openAddMovieModal()">Add Movie</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<div id="addMovieModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Movie Form</h5>
+        <button type="button" class="close" (click)="closeAddMovieModal()">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="addMovie()" #movieForm="ngForm" class="form">
+
+          <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" class="form-control" required [(ngModel)]="newMovie.title">
+          </div>
+
+          <div class="form-group">
+            <label for="genres">Genres:</label>
+            <input type="text" id="genres" name="genres" class="form-control" required [(ngModel)]="newMovie.genres">
+          </div>
+
+          <div class="form-group">
+            <label for="runtime">Runtime:</label>
+            <input type="text" id="runtime" name="runtime" class="form-control" required [(ngModel)]="newMovie.runtime">
+          </div>
+
+          <div class="form-group">
+            <label for="year">Year:</label>
+            <input type="text" id="year" name="year" class="form-control" required [(ngModel)]="newMovie.year">
+          </div>
+
+          <div class="form-group">
+            <label for="runtime">Actors:</label>
+            <input type="text" id="actors" name="actors" class="form-control" required [(ngModel)]="newMovie.actors">
+          </div>
+
+          <div class="form-group">
+            <label for="director">Director:</label>
+            <input type="text" id="director" name="director" class="form-control" required [(ngModel)]="newMovie.director">
+          </div>
+
+          <div class="form-group">
+            <label for="plot">Plot:</label>
+            <input type="text" id="plot" name="plot" class="form-control" required [(ngModel)]="newMovie.plot">
+          </div>
+
+          <div class="form-group">
+            <label for="posterUrl">Poster URL:</label>
+            <input type="text" id="posterUrl" name="posterUrl" class="form-control" required [(ngModel)]="newMovie.posterUrl">
+          </div><br>
+
+          <button class="btn btn-success" type="submit" [disabled]="!movieForm.valid">Add Movie</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-sm-3" *ngFor="let movie of movie_list" style="margin-bottom: 20px;">
+        <div class="card text-white bg-dark h-100" [routerLink]="['/movies', movie._id]">
+          <div class="card-body">
+            <div class="card-header">{{ movie.title }} ({{ movie.year }})</div>
+            <img [src]="movie.posterUrl" alt="NO IMAGE" class="movie-poster">
+            <p class="small"><strong>Runtime:</strong> {{ movie.runtime }} mins</p>
+            <p class="small"><strong>Actors:</strong> {{ movie.actors}}</p>
+            <p class="small"><strong>Director:</strong> {{ movie.director}}</p>
+            <p class="small"><strong>Genres:</strong> {{ movie.genres }}</p>
+          </div>
+          <div class="card-footer">
+            {{ movie.stars }}★ from {{ movie.reviews_count }} total reviews
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row mt-4">
+      <div class="col-sm-12 text-center">
+        <button class="btn btn-primary mx-2 btn-fixed-width bg-dark text-white" style = "margin-bottom: 15px;" (click)="previousPage()">←</button>
+        <button *ngFor="let pageNum of totalPages" class="btn btn-primary mx-2 btn-fixed-width bg-dark text-white" style = "margin-bottom: 15px;" (click)="goToPage(pageNum)">{{ pageNum }}</button>
+        <button class="btn btn-primary mx-2 btn-fixed-width bg-dark text-white" style = "margin-bottom: 15px;" (click)="nextPage()">→ </button>
+      </div>
+    </div>
+  </div>
+</div>

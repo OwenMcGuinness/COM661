@@ -1,0 +1,39 @@
+body {
+  padding-top: 56px;
+}
+
+.container {
+  margin-top: 20px;
+}
+
+h1 {
+  color: #007bff;
+  text-align: center;
+}
+
+.card {
+  margin-bottom: 20px;
+  width: 1000px;
+  height: 900px;
+}
+
+.row .card {
+  margin-right: 15px;
+}
+
+form {
+  margin-top: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.logged-out-message {
+  margin-top: 20px;
+  color: #dc3545; 
+}
+.card-img-top{
+  margin-top: 30px;
+  border: 5px solid #ffffff;
+}

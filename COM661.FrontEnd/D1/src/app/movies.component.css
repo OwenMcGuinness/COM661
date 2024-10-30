@@ -1,0 +1,31 @@
+.movie-poster {
+  width: 80px; 
+  height: auto;
+  object-fit: contain; 
+  margin-bottom: 10px; 
+  border: 5px solid #000000;
+}
+
+.card {
+  min-height: 100%;
+  cursor: pointer;
+}
+
+.card-body {
+  text-align: center;
+}
+
+.card-header {
+  font-size: 1rem; 
+  margin-bottom: 10px; 
+}
+
+.card-footer {
+  font-size: 1rem; 
+  text-align: center;
+}
+
+.card-body p {
+  margin-bottom: 5px; 
+  font-size: 0.7rem; 
+}

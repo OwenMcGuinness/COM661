@@ -1,0 +1,28 @@
+/* You can add global styles to this file, and also import other style files */
+/* nav.component.css */
+
+/* Add some padding to the top to give space for the navigation bar */
+body {
+    padding-top: 56px;
+  }
+  
+  /* Style the navbar */
+  .navbar {
+    padding: 0;
+  }
+  
+  /* Style the navbar brand */
+  .navbar-brand {
+    margin-right: 10px;
+    font-size: 1.5rem; /* Adjust the font size as needed */
+  }
+  
+  /* Style the navigation links */
+  .navbar-nav .nav-link {
+    margin-right: 10px;
+  }
+  
+  /* Style the login/logout button */
+  .btn-primary {
+    margin-left: 10px;
+  }
